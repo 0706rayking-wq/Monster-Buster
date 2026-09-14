@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="theme-color" content="#050816">
+  <title>Monster Buster</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="game-shell">
+    <canvas id="game" width="1280" height="720" aria-label="Monster Buster 橫向動作遊戲"></canvas>
+    <section id="start" class="modal">
+      <div class="card">
+        <p class="eyebrow">ORIGINAL SIDE-SCROLLING ACTION</p>
+        <h1>MONSTER<br><span>BUSTER</span></h1>
+        <p>擊退失控魔獸、攻略反應爐遺跡，將生命削弱至 35% 以下即可嘗試捕捉。</p>
+        <button id="start-btn">開始任務</button>
+        <small>鍵盤：A/D 移動・Space 跳躍・J 射擊・K 衝刺・L 捕捉</small>
+      </div>
+    </section>
+    <section id="result" class="modal hidden"><div class="card"><h2 id="result-title">任務完成</h2><p id="result-copy"></p><button id="restart-btn">再次挑戰</button></div></section>
+    <aside id="hud">
+      <div class="brand">MB//01</div>
+      <div class="meter"><span>HP</span><i><b id="hp-bar"></b></i></div>
+      <div class="meter energy"><span>CHARGE</span><i><b id="charge-bar"></b></i></div>
+      <div id="stage-label">REACTOR FRONTIER</div>
+      <div id="pet-count">圖鑑 0/4</div>
+    </aside>
+    <div id="boss-hud" class="hidden"><span>核心守衛</span><i><b id="boss-bar"></b></i></div>
+    <div id="toast"></div>
+    <nav id="mobile-controls" aria-label="觸控操作">
+      <div class="move"><button data-key="left">◀</button><button data-key="right">▶</button></div>
+      <div class="actions"><button data-key="capture" class="capture">◉<small>捕捉</small></button><button data-key="dash">➤<small>衝刺</small></button><button data-key="jump">↑<small>跳躍</small></button><button data-key="shoot" class="shoot">●<small>射擊</small></button></div>
+    </nav>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
