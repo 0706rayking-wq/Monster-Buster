@@ -1,0 +1,1 @@
+{"name":"monster-buster","version":"0.1.0","private":true,"scripts":{"dev":"python3 -m http.server 4173","test":"node tests/smoke.test.js"}}
