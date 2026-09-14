@@ -1,7 +1,9 @@
 (()=>{'use strict';
-const canvas=document.querySelector('#game'),ctx=canvas.getContext('2d');const W=1280,H=720,LEVEL_W=5200,GROUND=625,GRAVITY=1850;
+const canvas=document.querySelector('#game'),ctx=canvas.getContext('2d');let W=1280;const H=720,LEVEL_W=5200,GROUND=625,GRAVITY=1850;
 const assets={hero:img('assets/hero-sprites.png'),monsters:img('assets/monster-sprites.png'),far:img('assets/map-far.png'),mid:img('assets/map-mid.png'),front:img('assets/map-front.png')};
 const keys={left:false,right:false,jump:false,shoot:false,dash:false,capture:false};let running=false,last=0,camera=0,toastTimer=0,boss=null,won=false;
+function resizeViewport(){const viewport=window.visualViewport||window;const vw=viewport.width||innerWidth,vh=viewport.height||innerHeight;W=Math.max(320,Math.min(1280,Math.round(H*vw/vh)));canvas.width=W;canvas.height=H;camera=Math.max(0,Math.min(LEVEL_W-W,camera));if(!running){drawBg();drawWorld();drawForeground()}}
+addEventListener('resize',resizeViewport,{passive:true});if(window.visualViewport)visualViewport.addEventListener('resize',resizeViewport,{passive:true});
 const saved=JSON.parse(localStorage.getItem('monster_buster_collection_v1')||'[]');
 const player={x:120,y:GROUND-92,w:54,h:82,vx:0,vy:0,hp:100,maxHp:100,facing:1,onGround:false,coyote:0,jumpLock:false,dash:0,dashCd:0,shootCd:0,charge:0,hurt:0,anim:0};
 const platforms=[{x:0,y:GROUND,w:900,h:95},{x:1030,y:GROUND,w:770,h:95},{x:1940,y:GROUND,w:980,h:95},{x:3050,y:GROUND,w:780,h:95},{x:3970,y:GROUND,w:1230,h:95},{x:520,y:490,w:220,h:24},{x:850,y:430,w:210,h:24},{x:1330,y:500,w:260,h:24},{x:1710,y:390,w:220,h:24},{x:2180,y:485,w:260,h:24},{x:2580,y:390,w:190,h:24},{x:3300,y:470,w:250,h:24},{x:3680,y:370,w:220,h:24},{x:4200,y:480,w:240,h:24}];
@@ -41,5 +43,5 @@ function setKey(k,on){if(k==='KeyA'||k==='ArrowLeft')keys.left=on;if(k==='KeyD'|
 addEventListener('keydown',e=>{setKey(e.code,true);if(['Space','ArrowLeft','ArrowRight','ArrowUp'].includes(e.code))e.preventDefault()});addEventListener('keyup',e=>setKey(e.code,false));
 document.querySelectorAll('[data-key]').forEach(b=>{const name=b.dataset.key;b.addEventListener('pointerdown',e=>{e.preventDefault();keys[name]=true;b.setPointerCapture(e.pointerId)});const off=e=>{e.preventDefault();if(name==='shoot'&&keys.shoot)shoot();keys[name]=false};b.addEventListener('pointerup',off);b.addEventListener('pointercancel',off)});
 document.querySelector('#start-btn').onclick=()=>{document.querySelector('#start').classList.add('hidden');reset();running=true;last=performance.now();requestAnimationFrame(loop)};document.querySelector('#restart-btn').onclick=()=>{document.querySelector('#result').classList.add('hidden');reset();running=true;last=performance.now();requestAnimationFrame(loop)};
-reset();drawBg();drawWorld();drawForeground();
+resizeViewport();reset();drawBg();drawWorld();drawForeground();
 })();
